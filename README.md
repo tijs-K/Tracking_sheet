@@ -4,6 +4,7 @@
 
 A modern, minimalist job application and interview tracking dashboard built with **Angular 22**, **Tailwind CSS v4**, and **Docker**.
 
+[![Status](https://img.shields.io/badge/Status-In_Active_Development-amber?style=for-the-badge)](https://github.com)
 [![Angular](https://img.shields.io/badge/Angular-22-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -11,6 +12,9 @@ A modern, minimalist job application and interview tracking dashboard built with
 [![Node.js](https://img.shields.io/badge/Node.js-22+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 
 </div>
+
+> [!NOTE]
+> 🚧 **Work in Progress**: This is an ongoing personal project under active development. Features, database persistence, and UI improvements are continuously being added and refined.
 
 ---
 
