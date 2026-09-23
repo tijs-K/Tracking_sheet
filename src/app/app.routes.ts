@@ -23,6 +23,13 @@ export const routes: Routes = [
         ) ,
   },
   {
+    path: 'applications/:id',
+    loadComponent: () =>
+        import('./pages/specific-application/specific-application').then(
+            (component) => component.SpecificApplication
+        ),
+  },
+  {
     path: 'settings',
     loadComponent: () =>
         import('./pages/settings/settings').then(

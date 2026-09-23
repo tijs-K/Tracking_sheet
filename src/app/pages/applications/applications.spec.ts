@@ -18,4 +18,12 @@ describe('Applications', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should filter applications by status', () => {
+    component.selectStatus('Interview');
+
+    expect(component.filteredApplications.map((application) => application.status)).toEqual([
+      'Interview',
+    ]);
+  });
 });
