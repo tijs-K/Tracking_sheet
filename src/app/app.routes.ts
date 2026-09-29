@@ -29,4 +29,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/settings/settings').then((component) => component.Settings),
   },
+  {
+    path: 'add-application',
+    loadComponent: () =>
+      import('./pages/add-application/add-application').then((component) => component.AddApplication),
+  }
 ];
