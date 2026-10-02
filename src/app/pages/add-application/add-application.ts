@@ -29,8 +29,7 @@ export class AddApplication {
   onSubmit() {
     if (this.form.valid) {
       console.log('New application:', this.form.value);
-      // 1. Add to applicationService
-      // 2. Navigate back to applications list
+      // working on after design is done, for now just log the form value
       this.router.navigate(['/applications']);
     }
   }

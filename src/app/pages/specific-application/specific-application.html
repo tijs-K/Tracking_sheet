@@ -1,118 +1,111 @@
 <section class="w-full space-y-6">
-    <div class="mx-6 sm:mx-10 lg:mx-24 mt-10">
-    <span class="text-gray-500" >Applications / </span>
+  <div class="mx-6 sm:mx-10 lg:mx-24 mt-10">
+    <span class="text-gray-500">Applications / </span>
     <span class="text-black">{{ application?.company }}</span>
+  </div>
+  <div class="mx-6 sm:mx-10 lg:mx-24 flex items-start justify-between">
+    <div class="space-y-3">
+      <h1 class="text-2xl text-black font-semibold">
+        {{ application?.company }}
+        <span class="text-sm text-blue-500 text-center align-middle bg-blue-100 py-2 px-2 rounded">
+          {{ application?.status }}
+        </span>
+      </h1>
+      <h2 class="mt-3 text-2xl text-gray-500">
+        {{ application?.position }}
+      </h2>
     </div>
-    <div class="mx-6 sm:mx-10 lg:mx-24 flex items-start justify-between">
-        <div class="space-y-3">
-            <h1 class="text-2xl text-black font-semibold">
-                {{application?.company}}
-                <span class="text-sm text-blue-500 text-center align-middle bg-blue-100 py-2 px-2 rounded">
-                    {{ application?.status}}
-                </span>
-            </h1>
-            <h2 class="mt-3 text-2xl text-gray-500">
-                {{ application?.position}}
-            </h2>
-        </div>
-        <div class="flex gap-3 top-5">
-            <button class="bg-white py-1 px-3 rounded-xl border-gray-300 border">Edit</button>
+    <div class="flex gap-3 top-5">
+      <button class="bg-white py-1 px-3 rounded-xl border-gray-300 border">Edit</button>
 
-            <button class="bg-black text-white py-1 px-3 rounded-xl border-gray-300 border">Log Activity</button>
-        </div>
+      <button class="bg-black text-white py-1 px-3 rounded-xl border-gray-300 border">
+        Log Activity
+      </button>
     </div>
-    <hr class="mx-6 sm:mx-10 lg:mx-24 mt-4 border-gray-500">
+  </div>
+  <hr class="mx-6 sm:mx-10 lg:mx-24 mt-4 border-gray-500" />
 </section>
 
 <section class="mx-6 sm:mx-10 lg:mx-24 pb-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-2">
-         <div class="w-full mt-8">
-             <app-tile>
-                <h1 class="text-2xl font-semibold">{{application?.company}}</h1>
-                <p class="text-gray-500 text mt-5">Job Url</p>
-                <p class="text-black underline">{{application?.url}}</p>
-                <p class="text-gray-500 text mt-5"> Salary Range</p>
-                 <p class="text-black">{{application?.salaryRange}}</p>
-
-             </app-tile>
-         </div>
-         <div class="mt-8 w-full">
-            <app-tile>
-                 <h1 class="text-2xl font-semibold">My Notes</h1>
-                 <textarea
-                     class="mt-4 min-h-32 w-full resize-y rounded-xl bg-[#EBEAE6] p-3 align-top text-start"
-                     placeholder="Put notes here..."
-                     [value]="application?.notes ?? ''"
-                     (blur)="saveNotes($event)"
-                 ></textarea>
-             </app-tile>
-         </div>
-         <div class="mt-8 w-full" >
-            <app-tile>
-                <h1 class="text-2xl font-semibold">Interview Logs</h1>
-                @for ( log of interviewLogs; track $index; let isLast = $last) {
-                    <div class="flex items-start justify-between mt-2">
-                        <div>
-                            <h1 class="text font-semibold">{{ log.type }}</h1>
-                            <p class="text-gray-500">{{ log.notes }}</p>
-                        </div>
-                        <p  class="text-gray-500">{{ log.date }}</p>
-                    </div>
-                    @if (!isLast) {
-                        <hr class="mt-2 border-gray-300">
-                    }
+  <div class="lg:col-span-2">
+    <div class="w-full mt-8">
+      <app-tile>
+        <h1 class="text-2xl font-semibold">{{ application?.company }}</h1>
+        <p class="text-gray-500 text mt-5">Job Url</p>
+        <p class="text-black underline">{{ application?.url }}</p>
+        <p class="text-gray-500 text mt-5">Salary Range</p>
+        <p class="text-black">{{ application?.salaryRange }}</p>
+      </app-tile>
+    </div>
+    <div class="mt-8 w-full">
+      <app-tile>
+        <h1 class="text-2xl font-semibold">My Notes</h1>
+        <textarea
+          class="mt-4 min-h-32 w-full resize-y rounded-xl bg-[#EBEAE6] p-3 align-top text-start"
+          placeholder="Put notes here..."
+          [value]="application?.notes ?? ''"
+          (blur)="saveNotes($event)"
+        ></textarea>
+      </app-tile>
+    </div>
+    <div class="mt-8 w-full">
+      <app-tile>
+        <h1 class="text-2xl font-semibold">Interview Logs</h1>
+        @for (log of interviewLogs; track $index; let isLast = $last) {
+          <div class="flex items-start justify-between mt-2">
+            <div>
+              <h1 class="text font-semibold">{{ log.type }}</h1>
+              <p class="text-gray-500">{{ log.notes }}</p>
+            </div>
+            <p class="text-gray-500">{{ log.date }}</p>
+          </div>
+          @if (!isLast) {
+            <hr class="mt-2 border-gray-300" />
+          }
+        }
+      </app-tile>
+    </div>
+  </div>
+  <div class="lg:col-span-1 w-full">
+    <div class="mt-8 w-full">
+      <app-tile>
+        <h1 class="text-2xl font-semibold">process timeline</h1>
+        <div class="mt-6">
+          @for (timeline of processTimeline; track $index; let isLast = $last) {
+            <div class="flex gap-3">
+              <div class="flex w-4 flex-col items-center">
+                <span
+                  class="z-10 h-3 w-3 shrink-0 rounded-full border-2 border-white"
+                  [class.bg-green-500]="timeline.completed"
+                  [class.bg-gray-300]="!timeline.completed"
+                ></span>
+                @if (!isLast) {
+                  <span class="w-px grow bg-gray-300"></span>
                 }
-
-            </app-tile>
-         </div>
-    </div>
-    <div class="lg:col-span-1 w-full">
-        <div class="mt-8 w-full">
-            <app-tile>
-                <h1 class="text-2xl font-semibold">
-                    process timeline
-                </h1>
-                <div class="mt-6">
-                    @for ( timeline of processTimeline; track $index; let isLast = $last) {
-                        <div class="flex gap-3">
-                            <div class="flex w-4 flex-col items-center">
-                                <span
-                                    class="z-10 h-3 w-3 shrink-0 rounded-full border-2 border-white"
-                                    [class.bg-green-500]="timeline.completed"
-                                    [class.bg-gray-300]="!timeline.completed"
-                                ></span>
-                                @if (!isLast) {
-                                    <span class="w-px grow bg-gray-300"></span>
-                                }
-                            </div>
-                            <div class="flex min-w-0 flex-1 justify-between gap-3 pb-6">
-                                <p class="font-semibold text-black">{{ timeline.label }}</p>
-                                <p class="shrink-0 text-sm text-gray-500">{{ timeline.date }}</p>
-                            </div>
-                        </div>
-                    }
-                    </div>
-            </app-tile>
+              </div>
+              <div class="flex min-w-0 flex-1 justify-between gap-3 pb-6">
+                <p class="font-semibold text-black">{{ timeline.label }}</p>
+                <p class="shrink-0 text-sm text-gray-500">{{ timeline.date }}</p>
+              </div>
             </div>
-            <div class="mt-8 w-full">
-                <app-tile>
-                    <h1 class="text-2xl font-semibold">
-                        Hiring Contacts
-                    </h1>
-                    <div class="mt-6">
-                    @for (recruiter of application?.hiringContacts; track $index; let islast = $last) {
-                        <p class="text-xl font-semibold">{{recruiter.name}}</p>
-                        <p class="text-gray-500">{{recruiter.role}}</p>
-                        <p class="text-gray-500">{{recruiter.email}}</p>
-                        @if (!$last) {
-                              <hr class="mt-2 border-gray-300 mb-4">
-                              
-                        }
-                    }
-                    </div>
-                </app-tile>
-
-            </div>
+          }
+        </div>
+      </app-tile>
     </div>
-
+    <div class="mt-8 w-full">
+      <app-tile>
+        <h1 class="text-2xl font-semibold">Hiring Contacts</h1>
+        <div class="mt-6">
+          @for (recruiter of application?.hiringContacts; track $index; let islast = $last) {
+            <p class="text-xl font-semibold">{{ recruiter.name }}</p>
+            <p class="text-gray-500">{{ recruiter.role }}</p>
+            <p class="text-gray-500">{{ recruiter.email }}</p>
+            @if (!$last) {
+              <hr class="mt-2 border-gray-300 mb-4" />
+            }
+          }
+        </div>
+      </app-tile>
+    </div>
+  </div>
 </section>

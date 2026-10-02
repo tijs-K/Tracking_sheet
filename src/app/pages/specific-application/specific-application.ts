@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  Application,
-  ApplicationService,
-  InterviewLog,
-} from '../../services/applicationService';
+import { Application, ApplicationService, InterviewLog } from '../../services/applicationService';
 
 import { ActivatedRoute } from '@angular/router';
 import { Tile } from '../../layout/tile/tile';
@@ -15,19 +11,18 @@ import { Tile } from '../../layout/tile/tile';
   templateUrl: './specific-application.html',
 })
 export class SpecificApplication {
-
   readonly application: Application | undefined;
   readonly interviewLogs: InterviewLog[];
   readonly processTimeline: Application['processTimeline'];
 
   constructor(
     private route: ActivatedRoute,
-    private applicationservice : ApplicationService
-  ){
-    const idText = this.route.snapshot.paramMap.get('id')
-    const id = Number(idText)
-    this.application = this.applicationservice.getApplicationById(id)
-    this.interviewLogs = this.applicationservice.getInterviewLogsLatest(id)
+    private applicationservice: ApplicationService,
+  ) {
+    const idText = this.route.snapshot.paramMap.get('id');
+    const id = Number(idText);
+    this.application = this.applicationservice.getApplicationById(id);
+    this.interviewLogs = this.applicationservice.getInterviewLogsLatest(id);
     this.processTimeline = [...(this.application?.processTimeline ?? [])].reverse();
   }
 
@@ -38,7 +33,4 @@ export class SpecificApplication {
       this.applicationservice.updateNotes(this.application.id, notes);
     }
   }
-
 }
-
-

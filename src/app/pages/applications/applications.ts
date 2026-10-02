@@ -6,8 +6,6 @@ import {
   ApplicationStatus,
 } from '../../services/applicationService';
 
-
-
 @Component({
   imports: [RouterLink],
   selector: 'app-applications',
@@ -15,19 +13,18 @@ import {
   templateUrl: './applications.html',
 })
 export class Applications {
-
   readonly statuses: readonly ('All' | ApplicationStatus)[] = [
-  'All',
-  'Applied',
-  'Interview',
-  'Offer',
-  'Rejected',
-];
+    'All',
+    'Applied',
+    'Interview',
+    'Offer',
+    'Rejected',
+  ];
 
-selectedStatus: 'All' | ApplicationStatus = 'All';
+  selectedStatus: 'All' | ApplicationStatus = 'All';
 
   readonly applications: readonly Application[];
-  constructor(applicationService: ApplicationService){
+  constructor(applicationService: ApplicationService) {
     this.applications = applicationService.getApplications();
   }
 
@@ -36,9 +33,7 @@ selectedStatus: 'All' | ApplicationStatus = 'All';
       return this.applications;
     }
 
-    return this.applications.filter(
-      (application) => application.status === this.selectedStatus,
-    );
+    return this.applications.filter((application) => application.status === this.selectedStatus);
   }
 
   selectStatus(status: 'All' | ApplicationStatus): void {

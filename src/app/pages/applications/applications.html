@@ -1,42 +1,51 @@
 <section class="mx-4 mt-8 overflow-hidden rounded-xl bg-white px-6 py-5 shadow-sm sm:mx-10">
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <input class="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500" type="search" placeholder="Search applications...">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <input
+      class="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+      type="search"
+      placeholder="Search applications..."
+    />
 
-        <fieldset class="flex flex-wrap gap-4">
-            <legend class="sr-only">Filter applications by status</legend>
-            @for (status of statuses; track status) {
-                <label class="flex cursor-pointer items-center gap-2 text-sm text-gray-700">
-                    <input
-                        class="accent-blue-600"
-                        type="radio"
-                        name="application-status"
-                        [value]="status"
-                        [checked]="selectedStatus === status"
-                        (change)="selectStatus(status)"
-                    >
-                    <span>{{ status }}</span>
-                </label>
-            }
-        </fieldset>
-    </div>
+    <fieldset class="flex flex-wrap gap-4">
+      <legend class="sr-only">Filter applications by status</legend>
+      @for (status of statuses; track status) {
+        <label class="flex cursor-pointer items-center gap-2 text-sm text-gray-700">
+          <input
+            class="accent-blue-600"
+            type="radio"
+            name="application-status"
+            [value]="status"
+            [checked]="selectedStatus === status"
+            (change)="selectStatus(status)"
+          />
+          <span>{{ status }}</span>
+        </label>
+      }
+    </fieldset>
+  </div>
 
-    <div class="mt-6 grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500">
-        <span>Company</span>
-        <span>Position</span>
-        <span>Date applied</span>
-        <span>Status</span>
-    </div>
+  <div
+    class="mt-6 grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500"
+  >
+    <span>Company</span>
+    <span>Position</span>
+    <span>Date applied</span>
+    <span>Status</span>
+  </div>
 
-    <div class="divide-y divide-gray-100">
-        @for (application of filteredApplications; track application.company) {
-            <a [routerLink]="['/applications', application.id]" class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700 hover:bg-gray-50">
-                <span class="font-medium text-gray-900">{{ application.company }}</span>
-                <span>{{ application.position }}</span>
-                <span>{{ application.dateApplied }}</span>
-                <span [class]="application.statusClass">{{ application.status }}</span>
-            </a>
-        } @empty {
-            <p class="px-2 py-6 text-sm text-gray-500">No applications found.</p>
-        }
-    </div>
+  <div class="divide-y divide-gray-100">
+    @for (application of filteredApplications; track application.company) {
+      <a
+        [routerLink]="['/applications', application.id]"
+        class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700 hover:bg-gray-50"
+      >
+        <span class="font-medium text-gray-900">{{ application.company }}</span>
+        <span>{{ application.position }}</span>
+        <span>{{ application.dateApplied }}</span>
+        <span [class]="application.statusClass">{{ application.status }}</span>
+      </a>
+    } @empty {
+      <p class="px-2 py-6 text-sm text-gray-500">No applications found.</p>
+    }
+  </div>
 </section>

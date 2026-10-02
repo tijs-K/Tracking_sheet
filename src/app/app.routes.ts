@@ -20,9 +20,9 @@ export const routes: Routes = [
   {
     path: 'applications/:id',
     loadComponent: () =>
-        import('./pages/specific-application/specific-application').then(
-            (component) => component.SpecificApplication
-        ),
+      import('./pages/specific-application/specific-application').then(
+        (component) => component.SpecificApplication,
+      ),
   },
   {
     path: 'settings',
@@ -32,6 +32,8 @@ export const routes: Routes = [
   {
     path: 'add-application',
     loadComponent: () =>
-      import('./pages/add-application/add-application').then((component) => component.AddApplication),
-  }
+      import('./pages/add-application/add-application').then(
+        (component) => component.AddApplication,
+      ),
+  },
 ];

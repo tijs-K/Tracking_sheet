@@ -35,6 +35,7 @@ A modern, minimalist job application and interview tracking dashboard built with
 Docker runs the entire environment with live-reload and automatically restarts on system boot.
 
 1. **Start the container**:
+
    ```bash
    docker compose up -d --build
    ```
@@ -43,6 +44,7 @@ Docker runs the entire environment with live-reload and automatically restarts o
    Navigate to [http://localhost:4200](http://localhost:4200).
 
 3. **View logs**:
+
    ```bash
    docker compose logs -f
    ```
@@ -59,11 +61,13 @@ Docker runs the entire environment with live-reload and automatically restarts o
 If you prefer running directly on your host machine:
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Start development server**:
+
    ```bash
    npm start
    ```
@@ -101,15 +105,15 @@ Tracking_sheet/
 
 ## 🛠️ Available Scripts
 
-| Command | Description |
-| :--- | :--- |
-| `npm start` | Starts the Angular development server on `localhost:4200` |
-| `npm run build` | Builds client & server bundles in `dist/` |
-| `npm run serve:ssr:Tracking_sheet` | Runs the compiled production SSR Express server |
-| `npm run watch` | Builds continuously in development mode |
-| `npm test` | Executes unit tests with [Vitest](https://vitest.dev/) |
-| `npm run format` | Prettifies code across the entire codebase with Prettier |
-| `npm run format:check` | Verifies formatting without altering files |
+| Command                            | Description                                               |
+| :--------------------------------- | :-------------------------------------------------------- |
+| `npm start`                        | Starts the Angular development server on `localhost:4200` |
+| `npm run build`                    | Builds client & server bundles in `dist/`                 |
+| `npm run serve:ssr:Tracking_sheet` | Runs the compiled production SSR Express server           |
+| `npm run watch`                    | Builds continuously in development mode                   |
+| `npm test`                         | Executes unit tests with [Vitest](https://vitest.dev/)    |
+| `npm run format`                   | Prettifies code across the entire codebase with Prettier  |
+| `npm run format:check`             | Verifies formatting without altering files                |
 
 ---
 
