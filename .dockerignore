@@ -7,4 +7,6 @@ dist
 .prettierrc
 app.log
 serve
-
+.venv
+__pycache__
+*.db

@@ -2,7 +2,7 @@ services:
   tracking-sheet:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: tracking-sheet
     restart: unless-stopped
     ports:
@@ -12,3 +12,14 @@ services:
       - /app/node_modules
     environment:
       - NG_ALLOWED_HOSTS=localhost,127.0.0.1
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/app
