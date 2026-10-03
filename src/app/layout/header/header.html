@@ -1,17 +1,44 @@
-<header class="relative h-20 w-full border-b bg-white border-b-gray-400">
-  <nav class="absolute left-10 top-1/2 flex -translate-y-1/2 flex-row items-center gap-5">
-    <a routerLink="/dashboard">dashboard</a>
-    <a routerLink="/applications">applications</a>
-    <a routerLink="/settings">settings</a>
+<header
+  class="flex h-20 w-full items-center justify-between border-b border-gray-300 bg-white px-6 transition-colors duration-200 sm:px-10 dark:border-neutral-800 dark:bg-[#1A1A1A]"
+>
+  <nav class="flex items-center gap-6 sm:gap-8">
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="text-black dark:text-white font-semibold border-b-2 border-black dark:border-white"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="py-1 text-sm font-medium text-gray-500 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
+    >
+      Dashboard
+    </a>
+    <a
+      routerLink="/applications"
+      routerLinkActive="text-black dark:text-white font-semibold border-b-2 border-black dark:border-white"
+      class="py-1 text-sm font-medium text-gray-500 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
+    >
+      Applications
+    </a>
+    <a
+      routerLink="/settings"
+      routerLinkActive="text-black dark:text-white font-semibold border-b-2 border-black dark:border-white"
+      class="py-1 text-sm font-medium text-gray-500 transition-colors hover:text-black dark:text-neutral-400 dark:hover:text-white"
+    >
+      Settings
+    </a>
   </nav>
-  <button
-    class="absolute right-20 top-1/2 flex h-12 w-auto -translate-y-1/2 items-center justify-center gap-2 rounded-2xl bg-[#1A1A1A] px-4 text-white"
-    routerLink="/add-application"
-  >
-    <span class="text-xl">+</span>
-    <p>Add application</p>
-  </button>
-  <div class="absolute right-6 top-1/2 -translate-y-1/2">
-    <img class="h-10 w-10 rounded-full" src="/favicon.ico" alt="Profile" />
+
+  <div class="flex items-center gap-4">
+    <button
+      type="button"
+      routerLink="/add-application"
+      class="flex h-11 items-center gap-2 rounded-2xl bg-[#1A1A1A] px-4 text-sm font-medium text-white transition hover:bg-black dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+    >
+      <span class="text-xl leading-none">+</span>
+      <p class="hidden sm:inline">Add application</p>
+    </button>
+    <img
+      class="h-10 w-10 rounded-full border border-gray-200 dark:border-neutral-700"
+      src="/favicon.ico"
+      alt="Profile"
+    />
   </div>
 </header>

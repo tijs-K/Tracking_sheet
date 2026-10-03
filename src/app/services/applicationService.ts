@@ -40,7 +40,7 @@ export interface Application {
 })
 export class ApplicationService {
   //temp hardcoded data, for design development
-  readonly applications: readonly Application[] = [
+  applications: Application[] = [
     {
       id: 1,
       company: 'Company 1',
@@ -182,5 +182,49 @@ export class ApplicationService {
     if (application) {
       application.notes = notes;
     }
+  }
+
+  addApplication(data: {
+    company: string;
+    position: string;
+    url?: string;
+    salaryRange?: string;
+    dateApplied?: string;
+    status: ApplicationStatus;
+    notes?: string;
+  }): Application {
+    // Generate next ID
+    const nextId =
+      this.applications.length > 0 ? Math.max(...this.applications.map((a) => a.id)) + 1 : 1;
+    // Pick badge style based on status
+    const statusClasses: Record<ApplicationStatus, string> = {
+      Applied:
+        'font-medium w-auto rounded-full bg-blue-100 py-1.5 text-center text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 dark:border dark:border-blue-800/40',
+      Interview:
+        'font-medium w-auto rounded-full bg-amber-100 py-1.5 text-center text-amber-700 dark:bg-amber-950/50 dark:text-amber-400 dark:border dark:border-amber-800/40',
+      Offer:
+        'font-medium w-auto rounded-full bg-green-100 py-1.5 text-center text-green-700 dark:bg-green-950/50 dark:text-green-400 dark:border dark:border-green-800/40',
+      Rejected:
+        'font-medium w-auto rounded-full bg-red-100 py-1.5 text-center text-red-700 dark:bg-red-950/50 dark:text-red-400 dark:border dark:border-red-800/40',
+    };
+    const newApp: Application = {
+      id: nextId,
+      company: data.company,
+      position: data.position,
+      url: data.url || '',
+      salaryRange: data.salaryRange || '',
+      dateApplied: data.dateApplied || 'Today',
+      status: data.status,
+      statusClass: statusClasses[data.status] || statusClasses['Applied'],
+      notes: data.notes || '',
+      interviewLog: [],
+      hiringContacts: [],
+      processTimeline: [
+        { label: 'Application submitted', date: data.dateApplied || 'Today', completed: true },
+      ],
+    };
+    // Add to the beginning of the list
+    this.applications.unshift(newApp);
+    return newApp;
   }
 }

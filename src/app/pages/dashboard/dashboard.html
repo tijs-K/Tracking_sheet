@@ -1,29 +1,32 @@
 <section class="grid grid-cols-1 gap-5 px-10 pt-8 sm:grid-cols-2 lg:grid-cols-4">
   <app-tile>
-    <h2 class="text-gray-700">Total Applications</h2>
-    <h1 class="text-4xl font-bold">48</h1>
+    <h2 class="text-gray-700 dark:text-neutral-400">Total Applications</h2>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white">{{ totalApplications }}</h1>
   </app-tile>
 
   <app-tile>
-    <h2 class="text-gray-700">Interviews</h2>
-    <h1 class="text-4xl font-bold">12</h1>
+    <h2 class="text-gray-700 dark:text-neutral-400">Interviews</h2>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white">{{ interviewCount }}</h1>
   </app-tile>
 
   <app-tile>
-    <h2 class="text-gray-700">Offers received</h2>
-    <h1 class="text-4xl font-bold">3</h1>
+    <h2 class="text-gray-700 dark:text-neutral-400">Offers received</h2>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white">{{ offerCount }}</h1>
   </app-tile>
 
   <app-tile>
-    <h2 class="text-gray-700">Rejections</h2>
-    <h1 class="text-4xl font-bold">8</h1>
+    <h2 class="text-gray-700 dark:text-neutral-400">Rejections</h2>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white">{{ rejectedCount }}</h1>
   </app-tile>
 </section>
-<section class="mx-4 mt-8 overflow-hidden rounded-xl bg-white px-6 py-5 shadow-sm sm:mx-10">
-  <h2 class="mb-4 text-lg font-semibold text-gray-800">Recent applications</h2>
+
+<section
+  class="mx-4 mt-8 overflow-hidden rounded-xl bg-white px-6 py-5 shadow-sm transition-colors duration-200 sm:mx-10 dark:border dark:border-neutral-800 dark:bg-[#1E1E1E]"
+>
+  <h2 class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">Recent applications</h2>
 
   <div
-    class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500"
+    class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500 dark:border-neutral-800 dark:text-neutral-400"
   >
     <span>Company</span>
     <span>Position</span>
@@ -31,38 +34,19 @@
     <span>Status</span>
   </div>
 
-  <div class="divide-y divide-gray-100">
-    <div
-      class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700"
-    >
-      <span class="font-medium text-gray-900">Company 1</span>
-      <span>Frontend Developer</span>
-      <span>Sep 5, 2026</span>
-      <span class="font-medium w-auto py-4 rounded-full text-center bg-amber-100 text-amber-600"
-        >Interview</span
+  <div class="divide-y divide-gray-100 dark:divide-neutral-800/60">
+    @for (application of recentApplications; track application.id) {
+      <a
+        [routerLink]="['/applications', application.id]"
+        class="grid cursor-pointer grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700 transition hover:bg-gray-50 dark:text-neutral-300 dark:hover:bg-[#252525]"
       >
-    </div>
-
-    <div
-      class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700"
-    >
-      <span class="font-medium text-gray-900">Company 2</span>
-      <span>Product Designer</span>
-      <span>Sep 2, 2026</span>
-      <span class="font-medium w-auto py-4 rounded-full text-center bg-blue-100 text-blue-600"
-        >Applied</span
-      >
-    </div>
-
-    <div
-      class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700"
-    >
-      <span class="font-medium text-gray-900">Company 3</span>
-      <span>Software Engineer</span>
-      <span>Aug 29, 2026</span>
-      <span class="font-medium w-auto py-4 rounded-full text-center bg-green-100 text-green-600"
-        >Offer</span
-      >
-    </div>
+        <span class="font-medium text-gray-900 dark:text-white">{{ application.company }}</span>
+        <span>{{ application.position }}</span>
+        <span>{{ application.dateApplied }}</span>
+        <span [class]="application.statusClass">{{ application.status }}</span>
+      </a>
+    } @empty {
+      <p class="px-2 py-6 text-sm text-gray-500 dark:text-neutral-400">No applications yet.</p>
+    }
   </div>
 </section>

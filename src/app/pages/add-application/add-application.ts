@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ApplicationService } from '../../services/applicationService';
+import { ApplicationService, ApplicationStatus } from '../../services/applicationService';
 import { Tile } from '../../layout/tile/tile';
 
 @Component({
@@ -28,8 +28,18 @@ export class AddApplication {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log('New application:', this.form.value);
-      // working on after design is done, for now just log the form value
+      const val = this.form.value;
+
+      this.appService.addApplication({
+        company: val.company!,
+        position: val.position!,
+        url: val.url || '',
+        salaryRange: val.salaryRange || '',
+        dateApplied: val.dateApplied || '',
+        status: (val.status as ApplicationStatus) || 'Applied',
+        notes: val.notes || '',
+      });
+
       this.router.navigate(['/applications']);
     }
   }

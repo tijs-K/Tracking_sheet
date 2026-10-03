@@ -5,45 +5,53 @@
     <app-tile>
       <!-- Breadcrumb / Header -->
       <div class="mb-6">
-        <span class="text-gray-500">Applications / </span>
-        <span class="font-semibold text-black">New</span>
-        <h1 class="text-3xl font-bold text-gray-900 mt-2">Add New Application</h1>
+        <span class="text-gray-500 dark:text-neutral-400">Applications / </span>
+        <span class="font-semibold text-black dark:text-white">New</span>
+        <h1 class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">Add New Application</h1>
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
         <!-- Company -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Company Name *</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+            >Company Name *</label
+          >
           <input
             formControlName="company"
-            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
             placeholder="e.g. Company 1, Company 2"
           />
         </div>
         <!-- Position -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Job Title / Position *</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+            >Job Title / Position *</label
+          >
           <input
             formControlName="position"
-            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
             placeholder="e.g. Senior Frontend Engineer"
           />
         </div>
         <!-- URL & Salary in a 2-column row -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label class="block text-sm font-medium text-gray-700">Job URL</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+              >Job URL</label
+            >
             <input
               formControlName="url"
               type="url"
-              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
               placeholder="https://..."
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Salary Range</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+              >Salary Range</label
+            >
             <input
               formControlName="salaryRange"
-              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
               placeholder="e.g. $110,000 - $130,000"
             />
           </div>
@@ -51,18 +59,22 @@
         <!-- Date Applied & Status in a 2-column row -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label class="block text-sm font-medium text-gray-700">Date Applied</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+              >Date Applied</label
+            >
             <input
               formControlName="dateApplied"
               type="date"
-              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700">Status *</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300"
+              >Status *</label
+            >
             <select
               formControlName="status"
-              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+              class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
             >
               <option value="Applied">Applied</option>
               <option value="Interview">Interview</option>
@@ -73,27 +85,27 @@
         </div>
         <!-- Notes -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Notes</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-neutral-300">Notes</label>
           <textarea
             formControlName="notes"
             rows="3"
-            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none focus:border-blue-500"
+            class="mt-1 w-full rounded-lg border border-gray-300 p-2.5 outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
             placeholder="Any initial thoughts, referral names, etc."
           ></textarea>
         </div>
         <!-- Action Buttons -->
-        <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+        <div class="flex justify-end gap-3 border-t border-gray-200 pt-4 dark:border-neutral-800">
           <button
             type="button"
             routerLink="/applications"
-            class="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            class="cursor-pointer rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
           >
             Cancel
           </button>
           <button
             type="submit"
             [disabled]="form.invalid"
-            class="rounded-xl bg-black px-5 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50"
+            class="cursor-pointer rounded-xl bg-black px-5 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
           >
             Save Application
           </button>

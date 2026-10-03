@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   Application,
@@ -13,6 +13,8 @@ import {
   templateUrl: './applications.html',
 })
 export class Applications {
+  private readonly applicationService = inject(ApplicationService);
+
   readonly statuses: readonly ('All' | ApplicationStatus)[] = [
     'All',
     'Applied',
@@ -21,22 +23,27 @@ export class Applications {
     'Rejected',
   ];
 
-  selectedStatus: 'All' | ApplicationStatus = 'All';
+  readonly selectedStatus = signal<'All' | ApplicationStatus>('All');
+  readonly searchTerm = signal('');
 
-  readonly applications: readonly Application[];
-  constructor(applicationService: ApplicationService) {
-    this.applications = applicationService.getApplications();
+  get applications(): readonly Application[] {
+    return this.applicationService.getApplications();
   }
 
-  get filteredApplications(): readonly Application[] {
-    if (this.selectedStatus === 'All') {
-      return this.applications;
-    }
-
-    return this.applications.filter((application) => application.status === this.selectedStatus);
-  }
+  readonly filteredApplications = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const status = this.selectedStatus();
+    return this.applications.filter((application) => {
+      const matchesStatus = status === 'All' || application.status === status;
+      const matchesSearch =
+        term === '' ||
+        application.company.toLowerCase().includes(term) ||
+        application.position.toLowerCase().includes(term);
+      return matchesStatus && matchesSearch;
+    });
+  });
 
   selectStatus(status: 'All' | ApplicationStatus): void {
-    this.selectedStatus = status;
+    this.selectedStatus.set(status);
   }
 }

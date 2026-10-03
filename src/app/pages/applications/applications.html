@@ -1,21 +1,29 @@
-<section class="mx-4 mt-8 overflow-hidden rounded-xl bg-white px-6 py-5 shadow-sm sm:mx-10">
+<section
+  class="mx-4 mt-8 overflow-hidden rounded-xl bg-white px-6 py-5 shadow-sm transition-colors duration-200 sm:mx-10 dark:border dark:border-neutral-800 dark:bg-[#1E1E1E]"
+>
   <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <input
-      class="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+      #search
+      [value]="searchTerm()"
+      (input)="searchTerm.set(search.value)"
       type="search"
+      autocomplete="off"
       placeholder="Search applications..."
+      class="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 dark:border-neutral-700 dark:bg-[#161616] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-500"
     />
 
     <fieldset class="flex flex-wrap gap-4">
       <legend class="sr-only">Filter applications by status</legend>
       @for (status of statuses; track status) {
-        <label class="flex cursor-pointer items-center gap-2 text-sm text-gray-700">
+        <label
+          class="flex cursor-pointer items-center gap-2 text-sm text-gray-700 dark:text-neutral-300"
+        >
           <input
             class="accent-blue-600"
             type="radio"
             name="application-status"
             [value]="status"
-            [checked]="selectedStatus === status"
+            [checked]="selectedStatus() === status"
             (change)="selectStatus(status)"
           />
           <span>{{ status }}</span>
@@ -25,7 +33,7 @@
   </div>
 
   <div
-    class="mt-6 grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500"
+    class="mt-6 grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] border-b border-gray-200 px-2 pb-3 text-sm font-medium text-gray-500 dark:border-neutral-800 dark:text-neutral-400"
   >
     <span>Company</span>
     <span>Position</span>
@@ -33,19 +41,19 @@
     <span>Status</span>
   </div>
 
-  <div class="divide-y divide-gray-100">
-    @for (application of filteredApplications; track application.company) {
+  <div class="divide-y divide-gray-100 dark:divide-neutral-800/60">
+    @for (application of filteredApplications(); track application.id) {
       <a
         [routerLink]="['/applications', application.id]"
-        class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700 hover:bg-gray-50"
+        class="grid grid-cols-[minmax(14rem,2.5fr)_minmax(10rem,1.25fr)_minmax(8rem,1fr)_minmax(7rem,0.8fr)] items-center px-2 py-4 text-sm text-gray-700 transition hover:bg-gray-50 dark:text-neutral-300 dark:hover:bg-[#252525]"
       >
-        <span class="font-medium text-gray-900">{{ application.company }}</span>
+        <span class="font-medium text-gray-900 dark:text-white">{{ application.company }}</span>
         <span>{{ application.position }}</span>
         <span>{{ application.dateApplied }}</span>
         <span [class]="application.statusClass">{{ application.status }}</span>
       </a>
     } @empty {
-      <p class="px-2 py-6 text-sm text-gray-500">No applications found.</p>
+      <p class="px-2 py-6 text-sm text-gray-500 dark:text-neutral-400">No applications found.</p>
     }
   </div>
 </section>

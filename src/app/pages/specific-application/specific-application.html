@@ -1,47 +1,57 @@
 <section class="w-full space-y-6">
-  <div class="mx-6 sm:mx-10 lg:mx-24 mt-10">
-    <span class="text-gray-500">Applications / </span>
-    <span class="text-black">{{ application?.company }}</span>
+  <div class="mx-6 mt-10 sm:mx-10 lg:mx-24">
+    <span class="text-gray-500 dark:text-neutral-400">Applications / </span>
+    <span class="text-black dark:text-white">{{ application?.company }}</span>
   </div>
-  <div class="mx-6 sm:mx-10 lg:mx-24 flex items-start justify-between">
+  <div class="mx-6 flex items-start justify-between sm:mx-10 lg:mx-24">
     <div class="space-y-3">
-      <h1 class="text-2xl text-black font-semibold">
+      <h1 class="text-2xl font-semibold text-black dark:text-white">
         {{ application?.company }}
-        <span class="text-sm text-blue-500 text-center align-middle bg-blue-100 py-2 px-2 rounded">
+        <span
+          class="rounded bg-blue-100 px-2 py-2 text-center align-middle text-sm text-blue-600 dark:border dark:border-blue-800/40 dark:bg-blue-950/50 dark:text-blue-400"
+        >
           {{ application?.status }}
         </span>
       </h1>
-      <h2 class="mt-3 text-2xl text-gray-500">
+      <h2 class="mt-3 text-2xl text-gray-500 dark:text-neutral-400">
         {{ application?.position }}
       </h2>
     </div>
-    <div class="flex gap-3 top-5">
-      <button class="bg-white py-1 px-3 rounded-xl border-gray-300 border">Edit</button>
+    <div class="top-5 flex gap-3">
+      <button
+        class="cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-1 font-medium text-gray-700 transition hover:bg-gray-50 dark:border-neutral-700 dark:bg-[#1E1E1E] dark:text-neutral-200 dark:hover:bg-neutral-800"
+      >
+        Edit
+      </button>
 
-      <button class="bg-black text-white py-1 px-3 rounded-xl border-gray-300 border">
+      <button
+        class="cursor-pointer rounded-xl border border-gray-300 bg-black px-3 py-1 font-medium text-white transition hover:bg-gray-800 dark:border-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+      >
         Log Activity
       </button>
     </div>
   </div>
-  <hr class="mx-6 sm:mx-10 lg:mx-24 mt-4 border-gray-500" />
+  <hr class="mx-6 mt-4 border-gray-300 sm:mx-10 lg:mx-24 dark:border-neutral-800" />
 </section>
 
-<section class="mx-6 sm:mx-10 lg:mx-24 pb-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<section class="mx-6 grid grid-cols-1 gap-6 pb-12 sm:mx-10 lg:mx-24 lg:grid-cols-3">
   <div class="lg:col-span-2">
-    <div class="w-full mt-8">
+    <div class="mt-8 w-full">
       <app-tile>
-        <h1 class="text-2xl font-semibold">{{ application?.company }}</h1>
-        <p class="text-gray-500 text mt-5">Job Url</p>
-        <p class="text-black underline">{{ application?.url }}</p>
-        <p class="text-gray-500 text mt-5">Salary Range</p>
-        <p class="text-black">{{ application?.salaryRange }}</p>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">
+          {{ application?.company }}
+        </h1>
+        <p class="mt-5 text-sm text-gray-500 dark:text-neutral-400">Job Url</p>
+        <p class="text-black underline dark:text-neutral-200">{{ application?.url }}</p>
+        <p class="mt-5 text-sm text-gray-500 dark:text-neutral-400">Salary Range</p>
+        <p class="text-black dark:text-neutral-200">{{ application?.salaryRange }}</p>
       </app-tile>
     </div>
     <div class="mt-8 w-full">
       <app-tile>
-        <h1 class="text-2xl font-semibold">My Notes</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">My Notes</h1>
         <textarea
-          class="mt-4 min-h-32 w-full resize-y rounded-xl bg-[#EBEAE6] p-3 align-top text-start"
+          class="mt-4 min-h-32 w-full resize-y rounded-xl bg-[#EBEAE6] p-3 text-start align-top outline-none transition focus:border-blue-500 dark:bg-[#151515] dark:text-neutral-100 dark:placeholder-neutral-500 focus:dark:border-neutral-600"
           placeholder="Put notes here..."
           [value]="application?.notes ?? ''"
           (blur)="saveNotes($event)"
@@ -50,42 +60,45 @@
     </div>
     <div class="mt-8 w-full">
       <app-tile>
-        <h1 class="text-2xl font-semibold">Interview Logs</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Interview Logs</h1>
         @for (log of interviewLogs; track $index; let isLast = $last) {
-          <div class="flex items-start justify-between mt-2">
+          <div class="mt-2 flex items-start justify-between">
             <div>
-              <h1 class="text font-semibold">{{ log.type }}</h1>
-              <p class="text-gray-500">{{ log.notes }}</p>
+              <h2 class="font-semibold text-gray-900 dark:text-white">{{ log.type }}</h2>
+              <p class="text-gray-500 dark:text-neutral-400">{{ log.notes }}</p>
             </div>
-            <p class="text-gray-500">{{ log.date }}</p>
+            <p class="text-sm text-gray-500 dark:text-neutral-400">{{ log.date }}</p>
           </div>
           @if (!isLast) {
-            <hr class="mt-2 border-gray-300" />
+            <hr class="mt-2 border-gray-200 dark:border-neutral-800" />
           }
         }
       </app-tile>
     </div>
   </div>
-  <div class="lg:col-span-1 w-full">
+  <div class="w-full lg:col-span-1">
     <div class="mt-8 w-full">
       <app-tile>
-        <h1 class="text-2xl font-semibold">process timeline</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Process Timeline</h1>
         <div class="mt-6">
           @for (timeline of processTimeline; track $index; let isLast = $last) {
             <div class="flex gap-3">
               <div class="flex w-4 flex-col items-center">
                 <span
-                  class="z-10 h-3 w-3 shrink-0 rounded-full border-2 border-white"
+                  class="z-10 h-3 w-3 shrink-0 rounded-full border-2 border-white dark:border-neutral-900"
                   [class.bg-green-500]="timeline.completed"
                   [class.bg-gray-300]="!timeline.completed"
+                  [class.dark:bg-neutral-700]="!timeline.completed"
                 ></span>
                 @if (!isLast) {
-                  <span class="w-px grow bg-gray-300"></span>
+                  <span class="w-px grow bg-gray-300 dark:bg-neutral-800"></span>
                 }
               </div>
               <div class="flex min-w-0 flex-1 justify-between gap-3 pb-6">
-                <p class="font-semibold text-black">{{ timeline.label }}</p>
-                <p class="shrink-0 text-sm text-gray-500">{{ timeline.date }}</p>
+                <p class="font-semibold text-black dark:text-white">{{ timeline.label }}</p>
+                <p class="shrink-0 text-sm text-gray-500 dark:text-neutral-400">
+                  {{ timeline.date }}
+                </p>
               </div>
             </div>
           }
@@ -94,14 +107,14 @@
     </div>
     <div class="mt-8 w-full">
       <app-tile>
-        <h1 class="text-2xl font-semibold">Hiring Contacts</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Hiring Contacts</h1>
         <div class="mt-6">
           @for (recruiter of application?.hiringContacts; track $index; let islast = $last) {
-            <p class="text-xl font-semibold">{{ recruiter.name }}</p>
-            <p class="text-gray-500">{{ recruiter.role }}</p>
-            <p class="text-gray-500">{{ recruiter.email }}</p>
+            <p class="text-xl font-semibold text-gray-900 dark:text-white">{{ recruiter.name }}</p>
+            <p class="text-gray-500 dark:text-neutral-400">{{ recruiter.role }}</p>
+            <p class="text-gray-500 dark:text-neutral-400">{{ recruiter.email }}</p>
             @if (!$last) {
-              <hr class="mt-2 border-gray-300 mb-4" />
+              <hr class="mt-2 mb-4 border-gray-200 dark:border-neutral-800" />
             }
           }
         </div>
