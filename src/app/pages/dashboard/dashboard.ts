@@ -3,9 +3,11 @@ import { RouterLink } from '@angular/router';
 import { Tile } from '../../layout/tile/tile';
 import { ApplicationService, Application } from '../../services/applicationService';
 
+import { StatusBadge } from '../../layout/status-badge/status-badge';
+
 @Component({
   selector: 'app-dashboard',
-  imports: [Tile, RouterLink],
+  imports: [Tile, RouterLink, StatusBadge],
   styleUrl: './dashboard.css',
   templateUrl: './dashboard.html',
 })

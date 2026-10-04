@@ -4,8 +4,10 @@ import { Application, ApplicationService, InterviewLog } from '../../services/ap
 import { ActivatedRoute } from '@angular/router';
 import { Tile } from '../../layout/tile/tile';
 
+import { StatusBadge } from '../../layout/status-badge/status-badge';
+
 @Component({
-  imports: [Tile],
+  imports: [Tile, StatusBadge],
   selector: 'app-specific-application',
   styleUrl: './specific-application.css',
   templateUrl: './specific-application.html',

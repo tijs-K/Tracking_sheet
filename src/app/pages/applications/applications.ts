@@ -1,13 +1,15 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  Application,
   ApplicationService,
+  Application,
   ApplicationStatus,
 } from '../../services/applicationService';
 
+import { StatusBadge } from '../../layout/status-badge/status-badge';
+
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, StatusBadge],
   selector: 'app-applications',
   styleUrl: './applications.css',
   templateUrl: './applications.html',

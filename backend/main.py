@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from schemas import ApplicationCreate
+from schemas import ApplicationCreate, ApplicationResponse 
 from database import engine, get_db
 import models
 
@@ -18,18 +18,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/applications")
+@app.get("/api/applications", response_model=list[ApplicationResponse])
 def get_applications(db: Session = Depends(get_db)):
     return db.query(models.Application).all()
 
-@app.get("/api/applications/{application_id}")
+@app.get("/api/applications/{application_id}", response_model=ApplicationResponse)
 def get_application(application_id: int, db: Session = Depends(get_db)):
     application = db.query(models.Application).filter(models.Application.id == application_id).first()
     if not application:
         raise HTTPException(status_code=404, detail="Application not found")
     return application
 
-@app.post("/api/applications")
+@app.post("/api/applications", response_model=ApplicationResponse)
 def create_application(application: ApplicationCreate, db: Session = Depends(get_db)):
     new_app = models.Application(
         company=application.company,
@@ -45,7 +45,7 @@ def create_application(application: ApplicationCreate, db: Session = Depends(get
     db.refresh(new_app)
     return new_app
 
-@app.put("/api/applications/{application_id}")
+@app.put("/api/applications/{application_id}", response_model=ApplicationResponse)
 def update_application_status(application_id: int, status: str, db: Session = Depends(get_db)):
     app_record = db.query(models.Application).filter(models.Application.id == application_id).first()
     if not app_record:

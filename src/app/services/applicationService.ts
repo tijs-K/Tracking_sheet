@@ -1,190 +1,49 @@
-import { Injectable } from '@angular/core';
-
-export type ApplicationStatus = 'Applied' | 'Interview' | 'Offer' | 'Rejected';
-
-export interface InterviewLog {
-  date: string;
-  type: string;
-  notes: string;
-}
-
-export interface HiringContact {
-  name: string;
-  role: string;
-  email: string;
-}
-
-export interface ProcessTimelineEvent {
-  label: string;
-  date: string;
-  completed: boolean;
-}
-
-export interface Application {
-  id: number;
-  company: string;
-  position: string;
-  dateApplied: string;
-  status: ApplicationStatus;
-  statusClass: string;
-  url: string;
-  salaryRange: string;
-  notes: string;
-  interviewLog: InterviewLog[];
-  hiringContacts: HiringContact[];
-  processTimeline: ProcessTimelineEvent[];
-}
-
+import { inject, Injectable } from '@angular/core';
+export * from '../models/application.model';
+import { Application, ApplicationStatus, InterviewLog } from '../models/application.model';
+import { MOCK_APPLICATIONS } from '../models/mock-applications';
+import { ApplicationApiService } from './application-api.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationService {
-  //temp hardcoded data, for design development
-  applications: Application[] = [
-    {
-      id: 1,
-      company: 'Company 1',
-      position: 'Frontend Developer',
-      dateApplied: 'Sep 5, 2026',
-      status: 'Interview',
-      statusClass: 'font-medium w-auto rounded-full bg-amber-100 py-4 text-center text-amber-600',
-      url: 'https://company1.example/jobs/frontend-developer',
-      salaryRange: '$110,000 - $135,000',
-      notes: 'Strong focus on design systems and accessible product experiences.',
-      interviewLog: [
-        {
-          date: 'Sep 10, 2026',
-          type: 'Technical interview',
-          notes: 'Discussed component architecture and testing strategy.',
-        },
-        {
-          date: 'Sep 8, 2026',
-          type: 'Recruiter screen',
-          notes: 'Reviewed experience, salary expectations, and availability.',
-        },
-        {
-          date: 'Sep 12, 2026',
-          type: 'Team interview',
-          notes: 'Met two frontend engineers and talked through a past project.',
-        },
-      ],
-      hiringContacts: [
-        { name: 'Alex Morgan', role: 'Engineering Manager', email: 'alex.morgan@company1.example' },
-      ],
-      processTimeline: [
-        { label: 'Application submitted', date: 'Sep 5, 2026', completed: true },
-        { label: 'Recruiter screen', date: 'Sep 8, 2026', completed: true },
-        { label: 'Technical interview', date: 'Sep 10, 2026', completed: true },
-        { label: 'Team interview', date: 'Next step', completed: false },
-      ],
-    },
-    {
-      id: 2,
-      company: 'Company 2',
-      position: 'Product Designer',
-      dateApplied: 'Sep 2, 2026',
-      status: 'Applied',
-      statusClass: 'font-medium w-auto rounded-full bg-blue-100 py-4 text-center text-blue-600',
-      url: 'https://company2.example/careers/product-designer',
-      salaryRange: '$95,000 - $120,000',
-      notes: 'Portfolio should highlight research-led product improvements.',
-      interviewLog: [],
-      hiringContacts: [
-        { name: 'Sam Taylor', role: 'Talent Partner', email: 'sam.taylor@company2.example' },
-      ],
-      processTimeline: [
-        { label: 'Application submitted', date: 'Sep 2, 2026', completed: true },
-        { label: 'Recruiter screen', date: 'Not scheduled', completed: false },
-        { label: 'Portfolio review', date: 'Not scheduled', completed: false },
-      ],
-    },
-    {
-      id: 3,
-      company: 'Company 3',
-      position: 'Software Engineer',
-      dateApplied: 'Aug 29, 2026',
-      status: 'Offer',
-      statusClass: 'font-medium w-auto rounded-full bg-green-100 py-4 text-center text-green-600',
-      url: 'https://company3.example/jobs/software-engineer',
-      salaryRange: '$125,000 - $150,000',
-      notes: 'Offer received. Compare equity and remote-work terms before responding.',
-      interviewLog: [
-        {
-          date: 'Sep 6, 2026',
-          type: 'Final interview',
-          notes: 'Met the platform team and discussed the first 90 days.',
-        },
-      ],
-      hiringContacts: [
-        { name: 'Jordan Lee', role: 'Recruiter', email: 'jordan.lee@company3.example' },
-        {
-          name: 'Robin Patel',
-          role: 'Director of Engineering',
-          email: 'robin.patel@company3.example',
-        },
-      ],
-      processTimeline: [
-        { label: 'Application submitted', date: 'Aug 29, 2026', completed: true },
-        { label: 'Recruiter screen', date: 'Sep 1, 2026', completed: true },
-        { label: 'Technical interview', date: 'Sep 4, 2026', completed: true },
-        { label: 'Offer received', date: 'Sep 9, 2026', completed: true },
-      ],
-    },
-    {
-      id: 4,
-      company: 'Company 4',
-      position: 'Backend Developer',
-      dateApplied: 'Aug 24, 2026',
-      status: 'Rejected',
-      statusClass: 'font-medium w-auto rounded-full bg-red-100 py-4 text-center text-red-600',
-      url: 'https://company4.example/careers/backend-developer',
-      salaryRange: '$105,000 - $128,000',
-      notes: 'Role was closed after the first interview round.',
-      interviewLog: [
-        {
-          date: 'Aug 28, 2026',
-          type: 'Recruiter screen',
-          notes: 'Reviewed backend experience and availability.',
-        },
-      ],
-      hiringContacts: [
-        { name: 'Casey Smith', role: 'Recruiter', email: 'casey.smith@company4.example' },
-      ],
-      processTimeline: [
-        { label: 'Application submitted', date: 'Aug 24, 2026', completed: true },
-        { label: 'Recruiter screen', date: 'Aug 28, 2026', completed: true },
-        { label: 'Application closed', date: 'Sep 3, 2026', completed: true },
-      ],
-    },
-  ];
-
-  getApplications() {
+  private api = inject(ApplicationApiService);
+  // Initialize with mock data as fallback
+  applications: Application[] = [...MOCK_APPLICATIONS];
+  constructor() {
+    this.loadApplications();
+  }
+  getApplications(): Application[] {
     return this.applications;
   }
-
-  getApplicationById(id: number): Application | undefined {
-    return this.applications.find((application) => application.id == id);
-  }
-
-  getInterviewLogsLatest(id: number): InterviewLog[] {
-    const application = this.getApplicationById(id);
-
-    return application
-      ? [...application.interviewLog].sort(
-          (firstLog, secondLog) => Date.parse(secondLog.date) - Date.parse(firstLog.date),
-        )
-      : [];
-  }
-
-  updateNotes(id: number, notes: string): void {
-    const application = this.getApplicationById(id);
-
-    if (application) {
-      application.notes = notes;
+  async loadApplications(): Promise<Application[]> {
+    try {
+      const data = await this.api.getAll();
+      if (Array.isArray(data) && data.length > 0) {
+        this.applications = data;
+      }
+      return this.applications;
+    } catch (error) {
+      console.warn('Backend unavailable, using local mock data:', error);
+      return this.applications;
     }
   }
-
-  addApplication(data: {
+  getApplicationById(id: number): Application | undefined {
+    return this.applications.find((app) => app.id === id);
+  }
+  getInterviewLogsLatest(id: number): InterviewLog[] {
+    const app = this.getApplicationById(id);
+    return app?.interviewLog
+      ? [...app.interviewLog].sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+      : [];
+  }
+  updateNotes(id: number, notes: string): void {
+    const app = this.getApplicationById(id);
+    if (app) {
+      app.notes = notes;
+    }
+  }
+  async addApplication(data: {
     company: string;
     position: string;
     url?: string;
@@ -192,22 +51,10 @@ export class ApplicationService {
     dateApplied?: string;
     status: ApplicationStatus;
     notes?: string;
-  }): Application {
-    // Generate next ID
+  }): Promise<Application> {
     const nextId =
       this.applications.length > 0 ? Math.max(...this.applications.map((a) => a.id)) + 1 : 1;
-    // Pick badge style based on status
-    const statusClasses: Record<ApplicationStatus, string> = {
-      Applied:
-        'font-medium w-auto rounded-full bg-blue-100 py-1.5 text-center text-blue-700 dark:bg-blue-950/50 dark:text-blue-400 dark:border dark:border-blue-800/40',
-      Interview:
-        'font-medium w-auto rounded-full bg-amber-100 py-1.5 text-center text-amber-700 dark:bg-amber-950/50 dark:text-amber-400 dark:border dark:border-amber-800/40',
-      Offer:
-        'font-medium w-auto rounded-full bg-green-100 py-1.5 text-center text-green-700 dark:bg-green-950/50 dark:text-green-400 dark:border dark:border-green-800/40',
-      Rejected:
-        'font-medium w-auto rounded-full bg-red-100 py-1.5 text-center text-red-700 dark:bg-red-950/50 dark:text-red-400 dark:border dark:border-red-800/40',
-    };
-    const newApp: Application = {
+    const fallbackApp: Application = {
       id: nextId,
       company: data.company,
       position: data.position,
@@ -215,7 +62,6 @@ export class ApplicationService {
       salaryRange: data.salaryRange || '',
       dateApplied: data.dateApplied || 'Today',
       status: data.status,
-      statusClass: statusClasses[data.status] || statusClasses['Applied'],
       notes: data.notes || '',
       interviewLog: [],
       hiringContacts: [],
@@ -223,8 +69,22 @@ export class ApplicationService {
         { label: 'Application submitted', date: data.dateApplied || 'Today', completed: true },
       ],
     };
-    // Add to the beginning of the list
-    this.applications.unshift(newApp);
-    return newApp;
+    try {
+      const saved = await this.api.create(data);
+      const mapped: Application = {
+        ...saved,
+        interviewLog: saved.interviewLog || [],
+        hiringContacts: saved.hiringContacts || [],
+        processTimeline: saved.processTimeline || [
+          { label: 'Application submitted', date: saved.dateApplied || 'Today', completed: true },
+        ],
+      };
+      this.applications.unshift(mapped);
+      return mapped;
+    } catch (error) {
+      console.warn('Failed to save to backend, storing locally:', error);
+      this.applications.unshift(fallbackApp);
+      return fallbackApp;
+    }
   }
 }

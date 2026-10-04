@@ -43,7 +43,7 @@
         <span class="font-medium text-gray-900 dark:text-white">{{ application.company }}</span>
         <span>{{ application.position }}</span>
         <span>{{ application.dateApplied }}</span>
-        <span [class]="application.statusClass">{{ application.status }}</span>
+        <app-status-badge [status]="application.status" />
       </a>
     } @empty {
       <p class="px-2 py-6 text-sm text-gray-500 dark:text-neutral-400">No applications yet.</p>
