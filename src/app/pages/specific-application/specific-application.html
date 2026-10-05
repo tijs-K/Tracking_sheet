@@ -17,12 +17,16 @@
     </div>
     <div class="top-5 flex gap-3">
       <button
+        type="button"
+        (click)="isEditModalOpen.set(true)"
         class="cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-1 font-medium text-gray-700 transition hover:bg-gray-50 dark:border-neutral-700 dark:bg-[#1E1E1E] dark:text-neutral-200 dark:hover:bg-neutral-800"
       >
         Edit
       </button>
 
       <button
+        type="button"
+        (click)="isLogModalOpen.set(true)"
         class="cursor-pointer rounded-xl border border-gray-300 bg-black px-3 py-1 font-medium text-white transition hover:bg-gray-800 dark:border-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
       >
         Log Activity
@@ -70,6 +74,10 @@
           @if (!isLast) {
             <hr class="mt-2 border-gray-200 dark:border-neutral-800" />
           }
+        } @empty {
+          <p class="mt-4 text-sm text-gray-400 dark:text-neutral-500">
+            No interview logs yet. Click "Log Activity" to add one.
+          </p>
         }
       </app-tile>
     </div>
@@ -99,6 +107,8 @@
                 </p>
               </div>
             </div>
+          } @empty {
+            <p class="text-sm text-gray-400 dark:text-neutral-500">No timeline steps yet.</p>
           }
         </div>
       </app-tile>
@@ -114,9 +124,20 @@
             @if (!$last) {
               <hr class="mt-2 mb-4 border-gray-200 dark:border-neutral-800" />
             }
+          } @empty {
+            <p class="text-sm text-gray-400 dark:text-neutral-500">No hiring contacts yet.</p>
           }
         </div>
       </app-tile>
     </div>
   </div>
 </section>
+
+<!-- Modals -->
+@if (isEditModalOpen() && application) {
+  <app-edit-modal [application]="application!" (closed)="isEditModalOpen.set(false)" />
+}
+
+@if (isLogModalOpen()) {
+  <app-log-activity-modal [applicationId]="appId" (closed)="isLogModalOpen.set(false)" />
+}

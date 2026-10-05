@@ -1,58 +1,79 @@
 import { Injectable } from '@angular/core';
-import { Application } from '../models/application.model';
+import {
+  Application,
+  InterviewLog,
+  HiringContact,
+  ProcessTimelineEvent,
+} from '../models/application.model';
 
-const API_URL = 'http://localhost:8000/api/applications';
+const API_BASE =
+  typeof window === 'undefined'
+    ? 'http://backend:8000/api/applications'
+    : 'http://localhost:8000/api/applications';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationApiService {
-  /**
-   * Fetch all applications from FastAPI
-   */
-  async getAll(): Promise<Application[]> {
-    const response = await fetch(API_URL);
+  private async request<T>(path = '', init?: RequestInit): Promise<T> {
+    const response = await fetch(`${API_BASE}${path}`, {
+      ...init,
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+    });
+
     if (!response.ok) {
-      throw new Error(`Failed to fetch applications: ${response.status}`);
+      throw new Error(`API error ${response.status}: ${response.statusText}`);
     }
+
     return response.json();
   }
-  /**
-   * Fetch a single application by ID
-   */
-  async getById(id: number): Promise<Application> {
-    const response = await fetch(`${API_URL}/${id}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch application ${id}: ${response.status}`);
-    }
-    return response.json();
+
+  getAll(): Promise<Application[]> {
+    return this.request<Application[]>();
   }
-  /**
-   * Create a new application
-   */
-  async create(data: Partial<Application>): Promise<Application> {
-    const response = await fetch(API_URL, {
+
+  getById(id: number): Promise<Application> {
+    return this.request<Application>(`/${id}`);
+  }
+
+  create(data: Partial<Application>): Promise<Application> {
+    return this.request<Application>('', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error(`Failed to create application: ${response.status}`);
-    }
-    return response.json();
   }
-  /**
-   * Update status or details of an existing application
-   */
-  async update(id: number, data: Partial<Application>): Promise<Application> {
-    const response = await fetch(`${API_URL}/${id}`, {
+
+  update(id: number, data: Partial<Application>): Promise<Application> {
+    return this.request<Application>(`/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error(`Failed to update application: ${response.status}`);
-    }
-    return response.json();
+  }
+
+  addInterviewLog(id: number, log: Partial<InterviewLog>): Promise<InterviewLog> {
+    return this.request<InterviewLog>(`/${id}/interview-logs`, {
+      method: 'POST',
+      body: JSON.stringify(log),
+    });
+  }
+
+  addHiringContact(id: number, contact: Partial<HiringContact>): Promise<HiringContact> {
+    return this.request<HiringContact>(`/${id}/contacts`, {
+      method: 'POST',
+      body: JSON.stringify(contact),
+    });
+  }
+
+  addTimelineEvent(
+    id: number,
+    event: Partial<ProcessTimelineEvent>,
+  ): Promise<ProcessTimelineEvent> {
+    return this.request<ProcessTimelineEvent>(`/${id}/timeline`, {
+      method: 'POST',
+      body: JSON.stringify(event),
+    });
   }
 }
